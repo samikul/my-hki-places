@@ -1,12 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Fetch from '../LogicalComponents/Fetch'
 
 export default function HomeScreen() {
     return (
         <View style={styles.container}>
-            <Text>home</Text  >
-            <Fetch />
+            <Text>With this application you can find information about the places all around in Helsinki!.</Text>
+            <Text>This application uses data from Helsinki Open APi. The data is owned by Helsinki Marketing and the data is under Creative Commons BY 4.0 licence.</Text>
         </View >
     );
 };

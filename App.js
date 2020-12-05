@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
+import { Text } from 'react-native';
+
 
 import HomeScreen from './ViewComponents/HomeScreen'
 import FavoritiesScreen from './ViewComponents/FavoritiesScreen'
 import PlaceListScreen from './ViewComponents/PlaceListScreen'
-
 
 
 export default function App() {
@@ -16,7 +16,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
