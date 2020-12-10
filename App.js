@@ -1,16 +1,23 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { Text } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  FlatList,
+  Image,
+  TextInput,
+} from 'react-native'
+
+import MapScreen from './ViewComponents/MapScreen'
+import PlaceScreen from './ViewComponents/PlaceScreen'
+import FavoriteScreen from './ViewComponents/FavoriteScreen'
 
 
-import HomeScreen from './ViewComponents/HomeScreen'
-import FavoritiesScreen from './ViewComponents/FavoritiesScreen'
-import PlaceListScreen from './ViewComponents/PlaceListScreen'
-
-
-export default function App() {
+export default function App({ navigation }) {
 
   const Tab = createBottomTabNavigator();
 
@@ -19,13 +26,12 @@ export default function App() {
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === 'Home') {
-            iconName = 'md-home';
-          } else if (route.name === 'Favorities') {
-            iconName = 'md-heart';
-          }
-          else if (route.name === 'All places') {
+          if (route.name === 'Map') {
+            iconName = 'md-pin';
+          } else if (route.name === 'Places') {
             iconName = 'md-list';
+          } else if (route.name === 'Favorites') {
+            iconName = 'md-heart';
           }
 
           return <Ionicons
@@ -35,10 +41,21 @@ export default function App() {
           />;
         },
       })}>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="All places" component={PlaceListScreen} />
-        <Tab.Screen name="Favorities" component={FavoritiesScreen} />
+        <Tab.Screen name="Map" component={MapScreen} />
+        <Tab.Screen name="Places" component={PlaceScreen} />
+        <Tab.Screen name="Favorites" component={FavoriteScreen} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 50,
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

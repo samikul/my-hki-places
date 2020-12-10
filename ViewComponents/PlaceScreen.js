@@ -9,10 +9,10 @@ import {
     Image,
     TextInput,
 } from 'react-native'
-import { Avatar, Button, Card, Title, Paragraph, List } from 'react-native-paper';
+import { Avatar, Button, Card, Title, Paragraph, List, Modal, Portal, Provider } from 'react-native-paper';
 import { set } from 'react-native-reanimated';
 
-export default function FetchAndListAllPlaces(props) {
+export default function PlaceScreen({ navigation }) {
 
 
     const [places, setPlaces] = useState([])
@@ -23,7 +23,6 @@ export default function FetchAndListAllPlaces(props) {
     }, [])
 
     const getPlaces = () => {
-        console.log("getplaces() alku")
         const url = 'http://open-api.myhelsinki.fi/v1/places/'
         fetch(url)
             .then(res => res.json())
@@ -38,48 +37,35 @@ export default function FetchAndListAllPlaces(props) {
     }
 
     function addToFavorities(item) {
-        console.log('add favorite')
-        setFavorites([...favorites, item.name.fi])
+        console.log('addToFavorities() -> ', item.name.fi)
+        setFavorites([...favorites, /* { key: item } */item])
     }
 
-    function addComment() {
-        console.log('add comment')
-    }
-
-    function showOnMap() {
-        console.log(favorites)
-        console.log('show on map')
-    }
-
-
-
-    // https://blog.logrocket.com/designing-a-ui-with-custom-theming-using-react-native-paper/
     const LeftContent = props => <
         Avatar.Icon {...props} icon="map-marker" color="white" style={{ backgroundColor: 'navy' }} />
 
     return (
         <View style={styles.container}>
-            <Button icon="blank" onPress={() => console.log('search pressed')}>search</Button>
             <FlatList
-                style={{ marginLeft: "5%" }}
+                style={{ marginLeft: "5%", marginRight: "5%" }}
                 keyExtractor={item => item.id}
-                initialNumToRender={20}
-                onEndReached={showOnMap}
                 renderItem={({ item }) =>
                     <View>
-                        <Card elevation={4}>
+                        <Card elevation={4} style={{ marginBottom: 10 }}>
                             <Card.Title title={item.name.fi} subtitle={item.location.address.street_address} left={LeftContent} />
                             <Card.Content>
                                 <Paragraph>{item.description.body}</Paragraph>
                             </Card.Content>
                             <Card.Actions>
                                 <Button onPress={() => addToFavorities(item)} color='#CC5500' icon="heart" mode="text">Favorite</Button>
-                                <Button onPress={showOnMap} icon="map-marker" color='#CC5500' mode="text">Show on map</Button>
+                                <Button icon="map-marker" color='#CC5500' mode="text">Show on map</Button>
                             </Card.Actions>
                         </Card>
                     </View>}
                 data={places}
             />
+            {/* <Button
+                onPress={() => navigation.navigate('FavoriteScreen', favorites)} >favorites</Button> */}
         </View >
     );
 }
